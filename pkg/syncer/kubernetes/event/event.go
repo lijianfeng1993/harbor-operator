@@ -8,7 +8,7 @@ import (
 
 // Event the client that push event to kubernetes
 type Event interface {
-	NewEventAdd(object runtime.Object,reason, message string)
+	NewEventAdd(object runtime.Object, reason, message string)
 }
 
 // EventOption is the Event client interface implementation that using API calls to kubernetes.
@@ -27,9 +27,3 @@ func NewEvent(eventCli record.EventRecorder) Event {
 func (e *EventOption) NewEventAdd(object runtime.Object, reason, message string) {
 	e.eventsCli.Event(object, v1.EventTypeNormal, reason, message)
 }
-
-
-
-
-
-

@@ -58,7 +58,7 @@ func (mc *MinioClient) CreateBucket(bucketName string) error {
 }
 
 func (mc *MinioClient) RemoveObject(bucketName, objectName string) error {
-	opts := minio.RemoveObjectOptions {
+	opts := minio.RemoveObjectOptions{
 		GovernanceBypass: true,
 		//VersionID: "myversionid",
 	}

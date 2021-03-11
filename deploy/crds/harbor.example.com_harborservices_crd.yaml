@@ -1,0 +1,76 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: harborservices.harbor.example.com
+spec:
+  group: harbor.example.com
+  names:
+    kind: HarborService
+    listKind: HarborServiceList
+    plural: harborservices
+    singular: harborservice
+  scope: Namespaced
+  versions:
+    - name: v1
+      schema:
+        openAPIV3Schema:
+          description: HarborService is the Schema for the harborservices API
+          properties:
+            apiVersion:
+              description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+              type: string
+            kind:
+              description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+              type: string
+            metadata:
+              type: object
+            spec:
+              description: HarborServiceSpec defines the desired state of HarborService
+              type: object
+              properties:
+                instanceInfo:
+                  type: object
+                  properties:
+                    instanceName:
+                      type: string
+                    instanceType:
+                      type: string
+                    nodePortIndex:
+                      type: integer
+                    redisDbIndex:
+                      type: integer
+                    s3Config:
+                      type: object
+                      properties:
+                        bucket:
+                          type: string
+                        accesskey:
+                          type: string
+                        secretkey:
+                          type: string
+                        regionendpoint:
+                          type: string
+            status:
+              description: HarborServiceStatus defines the observed state of HarborService
+              type: object
+              properties:
+                condition:
+                  type: object
+                  properties:
+                    phase:
+                      type: string
+                    reason:
+                      type: string
+                    message:
+                      type: string
+                externalUrl:
+                  type: string
+          type: object
+      served: true
+      storage: true
+      subresources:
+        status: {}

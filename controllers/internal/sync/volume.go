@@ -11,7 +11,7 @@ import (
 )
 
 // NewK8sNsSyncer returns a new sync.Interface for reconciling k8s namespace
-func NewK8sVolumeSyncer(r *v1.HarborService,c client.Client, kubeclient *kubernetes.Clientset, eventCli event.Event) syncer.SyncInterface {
+func NewK8sVolumeSyncer(r *v1.HarborService, c client.Client, kubeclient *kubernetes.Clientset, eventCli event.Event) syncer.SyncInterface {
 
 	return syncer_kubernetes.NewK8sVolumeSyncer(fmt.Sprintf("HarborInstance:%s", r.Spec.InstanceInfo.InstanceName), r, c, kubeclient, eventCli)
 }

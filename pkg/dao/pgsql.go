@@ -125,7 +125,6 @@ func DeleteDatabases(instanceName string, opConfig *config.ConfigFile) error {
 		klog.Error(fmt.Sprintf("fail to drop registry database of %s, witherr: %s", instanceName, errRegistry.Error()))
 	}
 
-
 	// 断开notaryserver库并删除
 	disconnectNotaryserverRaw := fmt.Sprintf("SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE datname='%s_notaryserver' AND pid<>pg_backend_pid()", instanceName)
 	_, errDisServer := db.Exec(disconnectNotaryserverRaw)

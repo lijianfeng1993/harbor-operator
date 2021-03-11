@@ -35,18 +35,15 @@ import (
 
 // HarborServiceReconciler reconciles a HarborService object
 type HarborServiceReconciler struct {
-	Client client.Client
+	Client     client.Client
 	KubeClient *kubernetes.Clientset
-	Log    logr.Logger
-	Scheme *runtime.Scheme
-	EventsCli   event.Event
-	ConfigInfo  *config.ConfigFile
+	Log        logr.Logger
+	Scheme     *runtime.Scheme
+	EventsCli  event.Event
+	ConfigInfo *config.ConfigFile
 }
 
-
-var  HarborServiceList = make(map[string]*harborv1.HarborService)
-
-
+var HarborServiceList = make(map[string]*harborv1.HarborService)
 
 // +kubebuilder:rbac:groups=harbor.example.com,resources=harborservices,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=harbor.example.com,resources=harborservices/status,verbs=get;update;patch
@@ -80,7 +77,6 @@ func (r *HarborServiceReconciler) Reconcile(contxt context.Context, req ctrl.Req
 		return reconcile.Result{}, err
 	}
 
-
 	return ctrl.Result{}, nil
 }
 
@@ -90,7 +86,7 @@ func (r *HarborServiceReconciler) SetupWithManager(mgr ctrl.Manager) error {
 		Complete(r)
 }
 
-func (r *HarborServiceReconciler) InitSyncers(req ctrl.Request) []syncer.SyncInterface{
+func (r *HarborServiceReconciler) InitSyncers(req ctrl.Request) []syncer.SyncInterface {
 	syncers := []syncer.SyncInterface{
 		// database同步控制器
 		sync.NewDatabaseSyncer(HarborServiceList[req.Name], r.Client, r.ConfigInfo, r.EventsCli),
@@ -124,7 +120,7 @@ func (r *HarborServiceReconciler) sync(syncers []syncer.SyncInterface) error {
 
 // 执行删除操作
 func (r *HarborServiceReconciler) delete(syncer []syncer.SyncInterface) error {
-	for _,s := range syncer {
+	for _, s := range syncer {
 		s.Delete(context.TODO())
 	}
 	return nil

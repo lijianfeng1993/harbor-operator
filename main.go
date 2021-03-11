@@ -37,12 +37,10 @@ import (
 )
 
 var (
-	scheme   = runtime.NewScheme()
-	setupLog = ctrl.Log.WithName("setup")
-    ConfigInfo *config.ConfigFile
+	scheme     = runtime.NewScheme()
+	setupLog   = ctrl.Log.WithName("setup")
+	ConfigInfo *config.ConfigFile
 )
-
-
 
 func init() {
 	_ = clientgoscheme.AddToScheme(scheme)
@@ -69,8 +67,6 @@ func main() {
 
 	ctrl.SetLogger(zap.New(zap.UseDevMode(true)))
 
-
-
 	mgr, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
 		Scheme:             scheme,
 		MetricsBindAddress: metricsAddr,
@@ -91,10 +87,10 @@ func main() {
 
 	if err = (&controllers.HarborServiceReconciler{
 		KubeClient: kubeClient,
-		Client: mgr.GetClient(),
-		Log:    ctrl.Log.WithName("controllers").WithName("HarborService"),
-		Scheme: mgr.GetScheme(),
-		EventsCli: event.NewEvent(mgr.GetEventRecorderFor("harbor-operator")),
+		Client:     mgr.GetClient(),
+		Log:        ctrl.Log.WithName("controllers").WithName("HarborService"),
+		Scheme:     mgr.GetScheme(),
+		EventsCli:  event.NewEvent(mgr.GetEventRecorderFor("harbor-operator")),
 		ConfigInfo: ConfigInfo,
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "HarborService")

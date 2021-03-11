@@ -18,22 +18,22 @@ import (
 )
 
 type HelmReleaseManager struct {
-	kubeToken *KubeToken
-	listOps *ReleaseListOptions
-	releaseOps *ReleaseOptions
+	kubeToken    *KubeToken
+	listOps      *ReleaseListOptions
+	releaseOps   *ReleaseOptions
 	helmSettings *cli.EnvSettings
 }
 
-func NewHelmReleaseManager(cfg *KubeToken, listOps *ReleaseListOptions, releaseOps *ReleaseOptions, settings *cli.EnvSettings) *HelmReleaseManager{
+func NewHelmReleaseManager(cfg *KubeToken, listOps *ReleaseListOptions, releaseOps *ReleaseOptions, settings *cli.EnvSettings) *HelmReleaseManager {
 	return &HelmReleaseManager{
-		kubeToken: cfg,
-		listOps: listOps,
-		releaseOps: releaseOps,
+		kubeToken:    cfg,
+		listOps:      listOps,
+		releaseOps:   releaseOps,
 		helmSettings: settings,
 	}
 }
 
-func (hRelease *HelmReleaseManager)ListReleases()([]ReleaseElement, error){
+func (hRelease *HelmReleaseManager) ListReleases() ([]ReleaseElement, error) {
 	// 获取actionConfig
 	actionConfig, err := getActionConfig(hRelease.listOps.Namespace, hRelease.kubeToken)
 	if err != nil {
@@ -58,7 +58,7 @@ func (hRelease *HelmReleaseManager)ListReleases()([]ReleaseElement, error){
 
 	results, err := client.Run()
 	if err != nil {
-		klog.Error("Fail to run helm release list client, with error: %s", err.Error())
+		klog.Errorf("Fail to run helm release list client, with error: %s", err.Error())
 		return nil, err
 	}
 
@@ -71,7 +71,7 @@ func (hRelease *HelmReleaseManager)ListReleases()([]ReleaseElement, error){
 	return elements, nil
 }
 
-func (hRelease *HelmReleaseManager)GetReleaseStatus(name string)(ReleaseElement, error){
+func (hRelease *HelmReleaseManager) GetReleaseStatus(name string) (ReleaseElement, error) {
 	// 获取actionConfig
 	actionConfig, err := getActionConfig(hRelease.listOps.Namespace, hRelease.kubeToken)
 	if err != nil {
@@ -88,7 +88,7 @@ func (hRelease *HelmReleaseManager)GetReleaseStatus(name string)(ReleaseElement,
 	return element, nil
 }
 
-func (hRelease *HelmReleaseManager)ListReleaseHistories(name string)(ReleaseHistory, error){
+func (hRelease *HelmReleaseManager) ListReleaseHistories(name string) (ReleaseHistory, error) {
 	actionConfig, err := getActionConfig(hRelease.listOps.Namespace, hRelease.kubeToken)
 	if err != nil {
 		klog.Errorf("Fail to get actionConfig, with error: %s", err.Error())
@@ -105,7 +105,7 @@ func (hRelease *HelmReleaseManager)ListReleaseHistories(name string)(ReleaseHist
 	return getReleaseHistory(results), nil
 }
 
-func (hRelease *HelmReleaseManager)InstallRelease(name, chart string) error {
+func (hRelease *HelmReleaseManager) InstallRelease(name, chart string) error {
 	vals, err := mergeValues(hRelease.releaseOps)
 	if err != nil {
 		klog.Errorf("Fail to mergeValues, with error: %s", err.Error())
@@ -159,7 +159,6 @@ func (hRelease *HelmReleaseManager)InstallRelease(name, chart string) error {
 		return err
 	}
 
-
 	validInstallableChart, err := isChartInstallable(chartRequested)
 	if !validInstallableChart {
 		klog.Errorf("Fail to check if chart is installable, with error: %s", err.Error())
@@ -200,7 +199,7 @@ func (hRelease *HelmReleaseManager)InstallRelease(name, chart string) error {
 	return nil
 }
 
-func (hRelease *HelmReleaseManager)UninstallRelease(name string) error {
+func (hRelease *HelmReleaseManager) UninstallRelease(name string) error {
 	actionConfig, err := getActionConfig(hRelease.listOps.Namespace, hRelease.kubeToken)
 	if err != nil {
 		klog.Errorf("Fail to get actionConfig, with error: %s", err.Error())
@@ -210,7 +209,7 @@ func (hRelease *HelmReleaseManager)UninstallRelease(name string) error {
 	client := action.NewUninstall(actionConfig)
 	_, err = client.Run(name)
 	if err != nil {
-		klog.Errorf("Fail to uninstall release of %, with error: %s", name, err.Error())
+		klog.Errorf("Fail to uninstall release of %s, with error: %s", name, err.Error())
 		return err
 	}
 	return nil

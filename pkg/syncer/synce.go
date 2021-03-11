@@ -14,4 +14,3 @@ func Sync(ctx context.Context, syncer SyncInterface) error {
 	}
 	return nil
 }
-

@@ -9,12 +9,10 @@ import (
 	"harbor-operator/pkg/syncer/kubernetes/event"
 	"k8s.io/apimachinery/pkg/runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
-
 )
 
 // NewInstanceSyncer returns a new sync.Interface for reconciling instance
 func NewInstanceSyncer(r *v1.HarborService, c client.Client, scheme *runtime.Scheme, namespaceName string, opConfig *config.ConfigFile, eventCli event.Event) syncer.SyncInterface {
 
-	return instance.NewIntanceSyncer(fmt.Sprintf("HarborInstance:%s", r.Spec.InstanceInfo.InstanceName), namespaceName,  r, c, scheme, opConfig, eventCli)
+	return instance.NewIntanceSyncer(fmt.Sprintf("HarborInstance:%s", r.Spec.InstanceInfo.InstanceName), namespaceName, r, c, scheme, opConfig, eventCli)
 }
-

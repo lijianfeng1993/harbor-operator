@@ -2,71 +2,71 @@ package helm
 
 //define install harbor request info
 type InstallInfo struct {
-	InstanceName string   `json:"instanceName"`
-	InstanceType string   `json:"instanceType"`
-	NodePortIndex int64 `json:"nodePortIndex"`
-	S3           S3Config `json:"s3"`
-	PgInfo 	PgInfo `json:"pginfo"`
-	RedisInfo RedisInfo `json:redisinfo`
-	Jobservicepvc string `json:"jobservicepvc"`
+	InstanceName  string    `json:"instanceName"`
+	InstanceType  string    `json:"instanceType"`
+	NodePortIndex int64     `json:"nodePortIndex"`
+	S3            S3Config  `json:"s3"`
+	PgInfo        PgInfo    `json:"pginfo"`
+	RedisInfo     RedisInfo `json:"redisinfo"`
+	Jobservicepvc string    `json:"jobservicepvc"`
 }
 
 type RedisInfo struct {
-	RedisDbIndex int64   `json:"redisDbIndex"`
-	RedisAddr string
+	RedisDbIndex  int64 `json:"redisDbIndex"`
+	RedisAddr     string
 	RedisPassword string
 }
 
 type PgInfo struct {
-	Host string
-	Port string
-	UserName string
-	Password string
-	CoreDatabase string
-	ClairDatabase string
+	Host                 string
+	Port                 string
+	UserName             string
+	Password             string
+	CoreDatabase         string
+	ClairDatabase        string
 	NotaryServerDatabase string
 	NotarySignerDatabase string
-	SSLMode string
+	SSLMode              string
 }
 
 // define values.yaml
 type Values struct {
-	Expose      Expose `yaml:"expose"`
-	ExternalUrl string `yaml:"externalURL"`
-	InternalTls InternalTls `yaml:"internalTLS"`
-	Persistence     PersistenceConfig `yaml:"persistence"`
-	ImagePullPolicy string            `yamlm:"imagePullPolicy"`
-	UpdateStrategy  UpdateStrategy `yaml:"updateStrategy"`
-	LogLevel            string `yaml:"logLevel"`
-	HarborAdminPassword string `yaml:"harborAdminPassword"`
-	CaSecretName        string `yaml:"caSecretName"`
-	SecretKey           string `yaml:"secretKey"`
-	Proxy               Proxy `yaml:"proxy"`
-	Nginx Nginx `yaml:"nginx"`
-	Portal Portal `yaml:"portal"`
-	Core Core `yaml:"core"`
-	Jobservice Jobservice `yaml:"jobservice"`
-	Registry Registry `yaml:"registry"`
-	Chartmuseum Chartmuseum `yaml:"chartmuseum"`
-	Clair Clair `yaml:"clair"`
-	Trivy Trivy `yaml:"trivy"`
-	Notary Notary `yaml:"notary"`
-	Database Database `yaml:"database"`
-	Redis Redis `yaml:"redis"`
+	Expose              Expose            `yaml:"expose"`
+	ExternalUrl         string            `yaml:"externalURL"`
+	InternalTls         InternalTls       `yaml:"internalTLS"`
+	Persistence         PersistenceConfig `yaml:"persistence"`
+	ImagePullPolicy     string            `yamlm:"imagePullPolicy"`
+	UpdateStrategy      UpdateStrategy    `yaml:"updateStrategy"`
+	LogLevel            string            `yaml:"logLevel"`
+	HarborAdminPassword string            `yaml:"harborAdminPassword"`
+	CaSecretName        string            `yaml:"caSecretName"`
+	SecretKey           string            `yaml:"secretKey"`
+	Proxy               Proxy             `yaml:"proxy"`
+	Nginx               Nginx             `yaml:"nginx"`
+	Portal              Portal            `yaml:"portal"`
+	Core                Core              `yaml:"core"`
+	Jobservice          Jobservice        `yaml:"jobservice"`
+	Registry            Registry          `yaml:"registry"`
+	Chartmuseum         Chartmuseum       `yaml:"chartmuseum"`
+	Clair               Clair             `yaml:"clair"`
+	Trivy               Trivy             `yaml:"trivy"`
+	Notary              Notary            `yaml:"notary"`
+	Database            Database          `yaml:"database"`
+	Redis               Redis             `yaml:"redis"`
 }
 
 type Expose struct {
 	Type     string         `yaml:"type"`
 	Tls      TlsConfig      `yaml:"tls"`
 	NodePort NodePortConfig `yaml:"nodePort"`
-	Ingress IngressConfig	`yaml:"ingress"`
+	Ingress  IngressConfig  `yaml:"ingress"`
 }
 
 type TlsConfig struct {
-	Enable     bool   `yaml:"enabled"`
-	CertSource string `yaml:"certSource"`
-	Auto       TlsConfigAuto `yaml:"auto"`
-	Secret TlsConfigSecret`yaml:"secret"`
+	Enable     bool            `yaml:"enabled"`
+	CertSource string          `yaml:"certSource"`
+	Auto       TlsConfigAuto   `yaml:"auto"`
+	Secret     TlsConfigSecret `yaml:"secret"`
 }
 
 type TlsConfigAuto struct {
@@ -88,8 +88,8 @@ type NodePortConfig struct {
 }
 
 type PortsConfig struct {
-	Http PortNodePort `yaml:"http"`
-	Https PortNodePort `yaml:"https"`
+	Http   PortNodePort `yaml:"http"`
+	Https  PortNodePort `yaml:"https"`
 	Notary PortNodePort `yaml:"notary"`
 }
 
@@ -99,8 +99,8 @@ type PortNodePort struct {
 }
 
 type InternalTls struct {
-	Enable                bool                        `yaml:"enabled"`
-	CertSource string 	`yaml:"certSource"`
+	Enable     bool   `yaml:"enabled"`
+	CertSource string `yaml:"certSource"`
 }
 
 type PersistenceConfig struct {
@@ -111,17 +111,17 @@ type PersistenceConfig struct {
 }
 
 type PersistentVolumeClaimConfig struct {
-	RegistryPVC RegistryPVC `yaml:"registry"`
-	JobservicePVC JobservicePVC `yaml:"jobservice"`
-	ChartmuseumPVC RegistryPVC `yaml:"chartmuseum"`
+	RegistryPVC    RegistryPVC   `yaml:"registry"`
+	JobservicePVC  JobservicePVC `yaml:"jobservice"`
+	ChartmuseumPVC RegistryPVC   `yaml:"chartmuseum"`
 }
 
 type RegistryPVC struct {
 	ExistingClaim string `yaml:"existingClaim"`
-	StorageClass string `yaml:"storageClass"`
-	SubPath string `yaml:"subPath"`
-	AccessMode string `yaml:"accessMode"`
-	Size string `yaml:"size"`
+	StorageClass  string `yaml:"storageClass"`
+	SubPath       string `yaml:"subPath"`
+	AccessMode    string `yaml:"accessMode"`
+	Size          string `yaml:"size"`
 }
 
 type JobservicePVC struct {
@@ -133,10 +133,10 @@ type JobservicePVC struct {
 }
 
 type ImageChartStorage struct {
-	Disableredirect bool     `yaml:"disableredirect"`
-	Type            string   `yaml:"type"`
-	FileSystem   FileSystem `yaml:"filesystem"`
-	S3              S3Config `yaml:"s3"`
+	Disableredirect bool       `yaml:"disableredirect"`
+	Type            string     `yaml:"type"`
+	FileSystem      FileSystem `yaml:"filesystem"`
+	S3              S3Config   `yaml:"s3"`
 }
 
 type FileSystem struct {
@@ -174,40 +174,40 @@ type Proxy struct {
 }
 
 type Nginx struct {
-	Image              Image     `yaml:"image"`
-	ServiceAccountName string    `yaml:"serviceAccountName"`
-	Replicase          int64     `yaml:"replicas"`
+	Image              Image  `yaml:"image"`
+	ServiceAccountName string `yaml:"serviceAccountName"`
+	Replicase          int64  `yaml:"replicas"`
 	//Resources          Resources `yaml:"resources"`
 }
 
 type Portal struct {
-	Image              Image     `yaml:"image"`
-	ServiceAccountName string    `yaml:"serviceAccountName"`
-	Replicase          int64     `yaml:"replicas"`
+	Image              Image  `yaml:"image"`
+	ServiceAccountName string `yaml:"serviceAccountName"`
+	Replicase          int64  `yaml:"replicas"`
 	//Resources          Resources `yaml:"resources"`
 }
 
 type Core struct {
-	Image              Image     `yaml:"image"`
-	ServiceAccountName string    `yaml:"serviceAccountName"`
-	Replicase          int64     `yaml:"replicas"`
+	Image              Image  `yaml:"image"`
+	ServiceAccountName string `yaml:"serviceAccountName"`
+	Replicase          int64  `yaml:"replicas"`
 	//Resources          Resources `yaml:"resources"`
-	RepositoryQuota    int64     `yaml:"repositoryquota"`
-	HelmChartQuota     int64     `yaml:"helmchartquota"`
-	StartupProbe       StartupProbe `yaml:"startupProbe"`
-	Secret     string `yaml:"secret"`
-	SecretName string `yaml:"secretName"`
-	XsrfKey    string `yaml:"xsrfKey"`
+	RepositoryQuota int64        `yaml:"repositoryquota"`
+	HelmChartQuota  int64        `yaml:"helmchartquota"`
+	StartupProbe    StartupProbe `yaml:"startupProbe"`
+	Secret          string       `yaml:"secret"`
+	SecretName      string       `yaml:"secretName"`
+	XsrfKey         string       `yaml:"xsrfKey"`
 }
 
 type Jobservice struct {
-	Image              Image     `yaml:"image"`
-	ServiceAccountName string    `yaml:"serviceAccountName"`
-	Replicase          int64     `yaml:"replicas"`
-	MaxJobWorkers      int64     `yaml:"maxJobWorkers"`
-	JobLogger          string    `yaml:"jobLogger"`
+	Image              Image  `yaml:"image"`
+	ServiceAccountName string `yaml:"serviceAccountName"`
+	Replicase          int64  `yaml:"replicas"`
+	MaxJobWorkers      int64  `yaml:"maxJobWorkers"`
+	JobLogger          string `yaml:"jobLogger"`
 	//Resources          Resources `yaml:"resources"`
-	Secret             string    `yaml:"secret"`
+	Secret string `yaml:"secret"`
 }
 
 type StartupProbe struct {
@@ -216,18 +216,18 @@ type StartupProbe struct {
 }
 
 type Registry struct {
-	ServiceAccountName string `yaml:"serviceAccountName"`
-	Registry           RegistryContainer `yaml:"registry"`
-	Controller RegistryContainer `yaml:"controller"`
-	Replicase   int64  `yaml:"replicas"`
-	Secret      string `yaml:"secret"`
-	Relativeurls bool `yaml:"relativeurls"`
-	Credentials RegistryCredentials `yaml:"credentials"`
-	Middleware RegistryMiddleware `yaml:"middleware"`
+	ServiceAccountName string              `yaml:"serviceAccountName"`
+	Registry           RegistryContainer   `yaml:"registry"`
+	Controller         RegistryContainer   `yaml:"controller"`
+	Replicase          int64               `yaml:"replicas"`
+	Secret             string              `yaml:"secret"`
+	Relativeurls       bool                `yaml:"relativeurls"`
+	Credentials        RegistryCredentials `yaml:"credentials"`
+	Middleware         RegistryMiddleware  `yaml:"middleware"`
 }
 
 type RegistryContainer struct {
-	Image     Image     `yaml:"image"`
+	Image Image `yaml:"image"`
 	//Resources Resources `yaml:"resources"`
 }
 
@@ -238,8 +238,8 @@ type RegistryCredentials struct {
 }
 
 type RegistryMiddleware struct {
-	Enable     bool   `yaml:"enabled"`
-	Type       string `yaml:"type"`
+	Enable     bool       `yaml:"enabled"`
+	Type       string     `yaml:"type"`
 	CloudFront CloudFront `yaml:"middleware"`
 }
 
@@ -258,12 +258,12 @@ type Image struct {
 
 type Resources struct {
 	Requests struct {
-		Memory string `yaml:memory`
-		CPU    string `yaml:cpu`
+		Memory string `yaml:"memory"`
+		CPU    string `yaml:"cpu"`
 	} `yaml:"requests"`
 	Limits struct {
-		Memory string `yaml:memory`
-		CPU    string `yaml:cpu`
+		Memory string `yaml:"memory"`
+		CPU    string `yaml:"cpu"`
 	} `yaml:"limits"`
 }
 
@@ -276,61 +276,61 @@ type Chartmuseum struct {
 }
 
 type Clair struct {
-	Enable             bool   `yaml:"enabled"`
-	ServiceAccountName string `yaml:"serviceAccountName"`
+	Enable             bool           `yaml:"enabled"`
+	ServiceAccountName string         `yaml:"serviceAccountName"`
 	Clair              ClairContainer `yaml:"clair"`
-	Adapter ClairContainer `yaml:"adapter"`
-	Replicase        int64 `yaml:"replicas"`
-	UpdatersInterval int64 `yaml:"updatersInterval"`
+	Adapter            ClairContainer `yaml:"adapter"`
+	Replicase          int64          `yaml:"replicas"`
+	UpdatersInterval   int64          `yaml:"updatersInterval"`
 }
 
 type ClairContainer struct {
-	Image     Image     `yaml:"image"`
+	Image Image `yaml:"image"`
 	//Resources Resources `yaml:"resources"`
 }
 
 type Trivy struct {
-	Enable             bool      `yaml:"enabled"`
-	Image              Image     `yaml:"image"`
-	ServiceAccountName string    `yaml:"serviceAccountName"`
-	Replicase          int64     `yaml:"replicas"`
-	DebugMode          bool      `yaml:"debugMode"`
-	VulnType           string    `yaml:"vulnType"`
-	Severity           string    `yaml:"severity"`
-	IgnoreUnfixed      bool      `yaml:"ignoreUnfixed"`
-	Insecure           bool      `yaml:"insecure"`
-	GitHubToken        string      `yaml:"gitHubToken"`
-	SkipUpdate         bool      `yaml:"skipUpdate"`
+	Enable             bool   `yaml:"enabled"`
+	Image              Image  `yaml:"image"`
+	ServiceAccountName string `yaml:"serviceAccountName"`
+	Replicase          int64  `yaml:"replicas"`
+	DebugMode          bool   `yaml:"debugMode"`
+	VulnType           string `yaml:"vulnType"`
+	Severity           string `yaml:"severity"`
+	IgnoreUnfixed      bool   `yaml:"ignoreUnfixed"`
+	Insecure           bool   `yaml:"insecure"`
+	GitHubToken        string `yaml:"gitHubToken"`
+	SkipUpdate         bool   `yaml:"skipUpdate"`
 	//Resources          Resources `yaml:"resources"`
 }
 
 type Notary struct {
-	Enable bool `yaml:"enabled"`
-	Server NotaryContainer `yaml:"server"`
-	Signer NotaryContainer `yaml:"signer"`
-	SecretName string `yaml:"secretName"`
+	Enable     bool            `yaml:"enabled"`
+	Server     NotaryContainer `yaml:"server"`
+	Signer     NotaryContainer `yaml:"signer"`
+	SecretName string          `yaml:"secretName"`
 }
 
 type NotaryContainer struct {
-	ServiceAccountName string    `yaml:"serviceAccountName"`
-	Image              Image     `yaml:"image"`
+	ServiceAccountName string `yaml:"serviceAccountName"`
+	Image              Image  `yaml:"image"`
 	//Resources          Resources `yaml:"resources"`
-	Replicase          int64     `yaml:"replicas"`
+	Replicase int64 `yaml:"replicas"`
 }
 
 type Database struct {
-	Type     string `yaml:"type"`
-	Internal DatabaseInternal `yaml:"internal"`
-	External DatabaseExternal `yaml:"external"`
-	MaxIdleConns   int64 `yaml:"maxIdleConns"`
-	MaxOpenConns   int64 `yaml:"maxOpenConns"`
-	PodAnnotations int64 `yaml:"podAnnotations"`
+	Type           string           `yaml:"type"`
+	Internal       DatabaseInternal `yaml:"internal"`
+	External       DatabaseExternal `yaml:"external"`
+	MaxIdleConns   int64            `yaml:"maxIdleConns"`
+	MaxOpenConns   int64            `yaml:"maxOpenConns"`
+	PodAnnotations int64            `yaml:"podAnnotations"`
 }
 
 type DatabaseInternal struct {
-	ServiceAccountName string    `yaml:"serviceAccountName"`
-	Image              Image     `yaml:"image"`
-	Password           string    `yaml:"password"`
+	ServiceAccountName string `yaml:"serviceAccountName"`
+	Image              Image  `yaml:"image"`
+	Password           string `yaml:"password"`
 	//Resources          Resources `yaml:"resources"`
 }
 
@@ -347,14 +347,14 @@ type DatabaseExternal struct {
 }
 
 type Redis struct {
-	Type     string `yaml:"type"`
+	Type     string        `yaml:"type"`
 	Internal RedisInternal `yaml:"internal"`
 	External RedisExternal `yaml:"external"`
 }
 
 type RedisInternal struct {
-	ServiceAccountName string    `yaml:"serviceAccountName"`
-	Image              Image     `yaml:"image"`
+	ServiceAccountName string `yaml:"serviceAccountName"`
+	Image              Image  `yaml:"image"`
 	//Resources          Resources `yaml:"resources"`
 }
 

@@ -8,14 +8,14 @@ import (
 	"os"
 )
 
-func getActionConfig(namespace string, kubetoken *KubeToken)(*action.Configuration, error){
+func getActionConfig(namespace string, kubetoken *KubeToken) (*action.Configuration, error) {
 	actionConfig := new(action.Configuration)
 
 	kubeConfig := &genericclioptions.ConfigFlags{
-		APIServer:  &kubetoken.ApiServer,
-		BearerToken : &kubetoken.Token,
-		Namespace : &namespace,
-		Insecure: boolptr(true),
+		APIServer:   &kubetoken.ApiServer,
+		BearerToken: &kubetoken.Token,
+		Namespace:   &namespace,
+		Insecure:    boolptr(true),
 	}
 
 	if err := actionConfig.Init(kubeConfig, namespace, os.Getenv("HELM_DRIVER"), log.Printf); err != nil {
@@ -24,7 +24,6 @@ func getActionConfig(namespace string, kubetoken *KubeToken)(*action.Configurati
 	}
 	return actionConfig, nil
 }
-
 
 func boolptr(val bool) *bool {
 	return &val

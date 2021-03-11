@@ -1,7 +1,5 @@
 package instance
 
-
-
 import (
 	"context"
 	"fmt"
@@ -27,8 +25,8 @@ type InstanceSyncer struct {
 	Client            client.Client
 	Scheme            *runtime.Scheme
 	HarborServiceInfo *v1.HarborService
-	OperatorConfig		*config.ConfigFile
-	EventCli event.Event
+	OperatorConfig    *config.ConfigFile
+	EventCli          event.Event
 }
 
 func NewIntanceSyncer(name, namespace string, hs *v1.HarborService, c client.Client, scheme *runtime.Scheme, opConfig *config.ConfigFile, eventCli event.Event) syncer.SyncInterface {
@@ -38,8 +36,8 @@ func NewIntanceSyncer(name, namespace string, hs *v1.HarborService, c client.Cli
 		Client:            c,
 		Scheme:            scheme,
 		HarborServiceInfo: hs,
-		OperatorConfig:		opConfig,
-		EventCli: eventCli,
+		OperatorConfig:    opConfig,
+		EventCli:          eventCli,
 	}
 }
 
@@ -58,7 +56,7 @@ func (is *InstanceSyncer) Sync(c context.Context) (ctrl.Result, error) {
 
 		err := is.InstallHarborRelease()
 		if err != nil {
-			is.EventCli.NewEventAdd(is.HarborServiceInfo, "deployIntanceFailed","Deploy harbor service by helm failed")
+			is.EventCli.NewEventAdd(is.HarborServiceInfo, "deployIntanceFailed", "Deploy harbor service by helm failed")
 			is.HarborServiceInfo.Status.SetFailedStatus("Deploy harbor service by helm failed")
 			v1.FlushInstanceStatus(is.Client, is.HarborServiceInfo)
 			return ctrl.Result{}, err
@@ -75,8 +73,7 @@ func (is *InstanceSyncer) Sync(c context.Context) (ctrl.Result, error) {
 	return ctrl.Result{}, nil
 }
 
-
-func (is *InstanceSyncer)InstallHarborRelease() error {
+func (is *InstanceSyncer) InstallHarborRelease() error {
 	// 根据cr信息，渲染出harbor部署需要的helmchart values数据
 	// 目前支持持部署http的harbor
 	install := &helm.InstallInfo{
@@ -112,12 +109,11 @@ func (is *InstanceSyncer)InstallHarborRelease() error {
 
 	// 将values 更新到最新的helm-chart中
 	var targetPath = is.OperatorConfig.HarborHelmPath.HarborV213
-	err := controller.SaveValuesToFile(values, targetPath + "/values.yaml")
+	err := controller.SaveValuesToFile(values, targetPath+"/values.yaml")
 	if err != nil {
 		klog.Error(fmt.Sprintf("fail to save values.yaml file"))
 		return err
 	}
-
 
 	// 调用helm 方法，创建实例
 	listOps := &helm.ReleaseListOptions{

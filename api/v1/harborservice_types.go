@@ -28,7 +28,7 @@ type HarborServiceSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	InstanceInfo   InstanceInfo   `json:"instanceInfo,omitempty"`
+	InstanceInfo InstanceInfo `json:"instanceInfo,omitempty"`
 }
 
 type InstanceInfo struct {
@@ -50,14 +50,14 @@ type S3Config struct {
 type HarborServiceStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	Condition Condition `json:"condition,omitempty"`
-	ExternalUrl   string      `json:"externalUrl,omitempty"`
+	Condition   Condition `json:"condition,omitempty"`
+	ExternalUrl string    `json:"externalUrl,omitempty"`
 }
 
 // Condition saves the state information of the redis cluster
 type Condition struct {
-	Phase string `json:"phase,omitempty"`
-	Reason string `json:"reason,omitempty"`
+	Phase   string `json:"phase,omitempty"`
+	Reason  string `json:"reason,omitempty"`
 	Message string `json:"message,omitempty"`
 }
 

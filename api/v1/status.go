@@ -1,14 +1,14 @@
 package v1
+
 import (
 	"context"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
-
 const (
 	RunningStatus = "running"
-	FailedStatus = "failed"
-	FailedReason = "fail to deploy harbor service"
+	FailedStatus  = "failed"
+	FailedReason  = "fail to deploy harbor service"
 )
 
 func (cs *HarborServiceStatus) SetRunningStatus(url string) {
@@ -21,8 +21,8 @@ func (cs *HarborServiceStatus) SetRunningStatus(url string) {
 
 func (cs *HarborServiceStatus) SetFailedStatus(message string) {
 	c := Condition{
-		Phase: FailedStatus,
-		Reason: FailedReason,
+		Phase:   FailedStatus,
+		Reason:  FailedReason,
 		Message: message,
 	}
 	cs.Condition = c

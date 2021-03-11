@@ -5,7 +5,6 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 )
 
-
 // Interface represents a syncer. A syncer persists an object
 // (known as subject), into a store (kubernetes apiserver or generic stores)
 // and records kubernetes events

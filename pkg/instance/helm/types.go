@@ -1,4 +1,5 @@
 package helm
+
 import (
 	helmtime "helm.sh/helm/v3/pkg/time"
 	"time"
@@ -12,8 +13,8 @@ type KubeToken struct {
 // helm List struct
 type ReleaseListOptions struct {
 	// All ignores the limit/offset
-	All bool `json:"all"`
-	Namespace string	`json:"namespace"`
+	All       bool   `json:"all"`
+	Namespace string `json:"namespace"`
 	// AllNamespaces searches across namespaces
 	AllNamespaces bool `json:"all_namespaces"`
 	// Overrides the default lexicographic sorting
@@ -89,7 +90,6 @@ type ReleaseElement struct {
 
 	// TODO: Test Suite?
 }
-
 
 type ReleaseInfo struct {
 	Revision    int           `json:"revision"`

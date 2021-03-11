@@ -11,27 +11,24 @@ import (
 	"k8s.io/klog"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
-
 )
-
-
 
 type DatabaseSyncer struct {
 	Name              string
 	HarborServiceInfo *v1.HarborService
 	Client            client.Client
-	OperatorConfig		*config.ConfigFile
+	OperatorConfig    *config.ConfigFile
 	EventCli          event.Event
 }
 
 // NewDatabaseSyner 创建数据库的同步syncer
-func NewDatabaseSyncer(name string, hs *v1.HarborService,c client.Client,  opConfig *config.ConfigFile, eventCli event.Event) syncer.SyncInterface {
+func NewDatabaseSyncer(name string, hs *v1.HarborService, c client.Client, opConfig *config.ConfigFile, eventCli event.Event) syncer.SyncInterface {
 	return &DatabaseSyncer{
 		Name:              name,
 		HarborServiceInfo: hs,
 		Client:            c,
-		OperatorConfig:		opConfig,
-		EventCli: eventCli,
+		OperatorConfig:    opConfig,
+		EventCli:          eventCli,
 	}
 }
 
