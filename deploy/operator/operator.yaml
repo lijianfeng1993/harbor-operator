@@ -15,7 +15,7 @@ spec:
       containers:
         - name: harbor-operator
           # Replace this with the built image name
-          image: registry.paas/cmss/harbor-operator:latest
+          image: harbor-operator:latest
           imagePullPolicy: Always
           volumeMounts:
             - name: config

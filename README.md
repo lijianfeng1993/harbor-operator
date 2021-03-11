@@ -211,7 +211,7 @@ v2.1.3: digest: sha256:cf7e4311220b44f6d03b093028a69a24613fac6b47bbc16c7f5085711
 ```
 
 * 登陆页面查看镜像详情
-  ![image](https://raw.githubusercontent.com/ecis-operator/harbor-operator/master/doc/image/testharbor.png)
+  ![image](https://raw.githubusercontent.com/lijianfeng1993/harbor-operator/master/image/testharbor.png)
 
 ### Cleanup
 * 删除cr资源
