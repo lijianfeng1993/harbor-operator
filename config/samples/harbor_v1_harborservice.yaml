@@ -1,0 +1,7 @@
+apiVersion: harbor.example.com/v1
+kind: HarborService
+metadata:
+  name: harborservice-sample
+spec:
+  # Add fields here
+  foo: bar

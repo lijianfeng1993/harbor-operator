@@ -1,0 +1,24 @@
+# permissions for end users to edit harborservices.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: harborservice-editor-role
+rules:
+- apiGroups:
+  - harbor.example.com
+  resources:
+  - harborservices
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - harbor.example.com
+  resources:
+  - harborservices/status
+  verbs:
+  - get

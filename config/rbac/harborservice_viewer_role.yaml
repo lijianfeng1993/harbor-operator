@@ -1,0 +1,20 @@
+# permissions for end users to view harborservices.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: harborservice-viewer-role
+rules:
+- apiGroups:
+  - harbor.example.com
+  resources:
+  - harborservices
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - harbor.example.com
+  resources:
+  - harborservices/status
+  verbs:
+  - get
