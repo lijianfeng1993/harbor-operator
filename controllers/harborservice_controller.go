@@ -54,11 +54,12 @@ func (r *HarborServiceReconciler) Reconcile(contxt context.Context, req ctrl.Req
 	ctx := context.Background()
 	_ = r.Log.WithValues("harbroservice", req.NamespacedName)
 
-	// 获取当前的 CR，并打印
+	// 获取当前的 CR
 	instance := &harborv1.HarborService{}
 	err := r.Client.Get(ctx, req.NamespacedName, instance)
 	if err != nil {
 		if errors.IsNotFound(err) {
+			// CR被删除，执行Harbor清理逻辑
 			syncers := r.InitSyncers(req)
 			r.delete(syncers)
 
@@ -72,6 +73,7 @@ func (r *HarborServiceReconciler) Reconcile(contxt context.Context, req ctrl.Req
 	// 将list到的cr信息初始化到HarborServiceList中
 	HarborServiceList[instance.Name] = instance
 
+	// 执行Harbor集群的部署或更新逻辑
 	syncers := r.InitSyncers(req)
 	if err = r.sync(syncers); err != nil {
 		return reconcile.Result{}, err

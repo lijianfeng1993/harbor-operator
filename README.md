@@ -135,7 +135,7 @@ spec:
 
 * 创建cr
 ```
-[root@master1 crds]# kubectl create -f testcr.yaml 
+[root@master1 crds]# kubectl create -f deploy/crds/testharbor.yaml 
 harborservice.harbor.example.com/testharbor created
 ```
 
