@@ -1,0 +1,7 @@
+domain: example.com
+repo: harbor-operator
+resources:
+- group: harbor
+  kind: HarborService
+  version: v1
+version: "2"

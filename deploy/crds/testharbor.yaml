@@ -1,0 +1,14 @@
+apiVersion: harbor.example.com/v1
+kind: HarborService
+metadata:
+  name: testharbor
+spec:
+  instanceInfo:
+    instanceName: "testharbor"
+    instanceType: "harbor"
+    nodePortIndex: 32190
+    redisDbIndex: 30
+    s3Config:
+      bucket: "test1"
+      accesskey: "admin"
+      secretkey: "8cDcos11"
