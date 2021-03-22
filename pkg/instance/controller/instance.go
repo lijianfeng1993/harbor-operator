@@ -12,6 +12,16 @@ import (
 )
 
 func GenerageInstanceHelmChart(installInfo *helm.InstallInfo) (values helm.Values) {
+	var imageVersion string
+	switch installInfo.InstanceVersion {
+	case "v2.1.3":
+		imageVersion = ImageVersion213
+	case "v2.1.4":
+		imageVersion = ImageVersion214
+	default:
+		imageVersion = ImageVersion213
+	}
+
 	intanceValues := helm.Values{
 		Expose: helm.Expose{
 			Type: "nodePort",
@@ -96,7 +106,7 @@ func GenerageInstanceHelmChart(installInfo *helm.InstallInfo) (values helm.Value
 		Nginx: helm.Nginx{
 			Image: helm.Image{
 				Repository: NginxRepoName,
-				Tag:        NginxRepoTag,
+				Tag:        imageVersion,
 			},
 			ServiceAccountName: "",
 			Replicase:          1,
@@ -104,7 +114,7 @@ func GenerageInstanceHelmChart(installInfo *helm.InstallInfo) (values helm.Value
 		Portal: helm.Portal{
 			Image: helm.Image{
 				Repository: PortalRepoName,
-				Tag:        PortalRepoTag,
+				Tag:        imageVersion,
 			},
 			ServiceAccountName: "",
 			Replicase:          1,
@@ -112,7 +122,7 @@ func GenerageInstanceHelmChart(installInfo *helm.InstallInfo) (values helm.Value
 		Core: helm.Core{
 			Image: helm.Image{
 				Repository: CoreRepoName,
-				Tag:        CoreRepoTag,
+				Tag:        imageVersion,
 			},
 			ServiceAccountName: "",
 			Replicase:          1,
@@ -127,7 +137,7 @@ func GenerageInstanceHelmChart(installInfo *helm.InstallInfo) (values helm.Value
 		Jobservice: helm.Jobservice{
 			Image: helm.Image{
 				Repository: JobserviceRepoName,
-				Tag:        JobserviceRepoTag,
+				Tag:        imageVersion,
 			},
 			Replicase:          1,
 			ServiceAccountName: "",
@@ -140,13 +150,13 @@ func GenerageInstanceHelmChart(installInfo *helm.InstallInfo) (values helm.Value
 			Registry: helm.RegistryContainer{
 				Image: helm.Image{
 					Repository: RegistryRepoName,
-					Tag:        RegistryRepoTag,
+					Tag:        imageVersion,
 				},
 			},
 			Controller: helm.RegistryContainer{
 				Image: helm.Image{
 					Repository: RegistryCtlRepoName,
-					Tag:        RegistryCtlRepoTag,
+					Tag:        imageVersion,
 				},
 			},
 			Replicase:    1,
@@ -175,7 +185,7 @@ func GenerageInstanceHelmChart(installInfo *helm.InstallInfo) (values helm.Value
 			AbsoluteUrl:        false,
 			Image: helm.Image{
 				Repository: ChartmuseumRepoName,
-				Tag:        ChartmuseumRepoTag,
+				Tag:        imageVersion,
 			},
 			Replicase: 1,
 		},
@@ -185,13 +195,13 @@ func GenerageInstanceHelmChart(installInfo *helm.InstallInfo) (values helm.Value
 			Clair: helm.ClairContainer{
 				Image: helm.Image{
 					Repository: ClairRepoName,
-					Tag:        ClairRepoTag,
+					Tag:        imageVersion,
 				},
 			},
 			Adapter: helm.ClairContainer{
 				Image: helm.Image{
 					Repository: ClairAdapterRepoName,
-					Tag:        ClairAdapterRepoTag,
+					Tag:        imageVersion,
 				},
 			},
 			Replicase:        1,
@@ -201,7 +211,7 @@ func GenerageInstanceHelmChart(installInfo *helm.InstallInfo) (values helm.Value
 			Enable: false,
 			Image: helm.Image{
 				Repository: TrivyRepoName,
-				Tag:        TrivyRepoTag,
+				Tag:        imageVersion,
 			},
 			ServiceAccountName: "",
 			Replicase:          1,
@@ -219,7 +229,7 @@ func GenerageInstanceHelmChart(installInfo *helm.InstallInfo) (values helm.Value
 				ServiceAccountName: "",
 				Image: helm.Image{
 					Repository: NotaryServerRepoName,
-					Tag:        NotaryServerRepoTag,
+					Tag:        imageVersion,
 				},
 				Replicase: 1,
 			},
@@ -227,7 +237,7 @@ func GenerageInstanceHelmChart(installInfo *helm.InstallInfo) (values helm.Value
 				ServiceAccountName: "",
 				Image: helm.Image{
 					Repository: NotarySignerRepoName,
-					Tag:        NotarySignerRepoTag,
+					Tag:        imageVersion,
 				},
 			},
 			SecretName: "",
@@ -238,7 +248,7 @@ func GenerageInstanceHelmChart(installInfo *helm.InstallInfo) (values helm.Value
 				ServiceAccountName: "",
 				Image: helm.Image{
 					Repository: HarborDbRepoName,
-					Tag:        HarborDbRepoTag,
+					Tag:        imageVersion,
 				},
 				Password: DefaultHarborInternalDbPassword,
 			},
@@ -262,7 +272,7 @@ func GenerageInstanceHelmChart(installInfo *helm.InstallInfo) (values helm.Value
 				ServiceAccountName: "",
 				Image: helm.Image{
 					Repository: HarborRedisRepoName,
-					Tag:        HarborRedisRepoTag,
+					Tag:        imageVersion,
 				},
 			},
 			External: helm.RedisExternal{

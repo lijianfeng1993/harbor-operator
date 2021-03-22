@@ -32,11 +32,11 @@ type HarborServiceSpec struct {
 }
 
 type InstanceInfo struct {
-	InstanceName  string   `json:"instanceName,omitempty"`
-	InstanceType  string   `json:"instanceType,omitempty"`
-	NodePortIndex int64    `json:"nodePortIndex,omitempty"`
-	RedisDbIndex  int64    `json:"redisDbIndex,omitempty"`
-	S3Config      S3Config `json:"s3Config,omitempty"`
+	InstanceName    string   `json:"instanceName,omitempty"`
+	InstanceVersion string   `json:"instanceVersion,omitempty"`
+	NodePortIndex   int64    `json:"nodePortIndex,omitempty"`
+	RedisDbIndex    int64    `json:"redisDbIndex,omitempty"`
+	S3Config        S3Config `json:"s3Config,omitempty"`
 }
 
 type S3Config struct {

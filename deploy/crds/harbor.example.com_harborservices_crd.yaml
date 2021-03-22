@@ -37,7 +37,7 @@ spec:
                   properties:
                     instanceName:
                       type: string
-                    instanceType:
+                    instanceVersion:
                       type: string
                     nodePortIndex:
                       type: integer

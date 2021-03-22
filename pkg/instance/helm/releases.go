@@ -199,6 +199,77 @@ func (hRelease *HelmReleaseManager) InstallRelease(name, chart string) error {
 	return nil
 }
 
+func (hRelease *HelmReleaseManager) UpgradeRelease(name, chart string) error {
+	vals, err := mergeValues(hRelease.releaseOps)
+	if err != nil {
+		klog.Errorf("Fail to mergeValues, with error: %s", err.Error())
+		return err
+	}
+
+	actionConfig, err := getActionConfig(hRelease.listOps.Namespace, hRelease.kubeToken)
+	if err != nil {
+		klog.Errorf("Fail to get actionConfig, with error: %s", err.Error())
+		return err
+	}
+
+	client := action.NewUpgrade(actionConfig)
+	client.Namespace = hRelease.listOps.Namespace
+
+	// merge install options
+	client.DryRun = hRelease.releaseOps.DryRun
+	client.DisableHooks = hRelease.releaseOps.DisableHooks
+	client.Wait = hRelease.releaseOps.Wait
+	client.Devel = hRelease.releaseOps.Devel
+	client.Description = hRelease.releaseOps.Description
+	client.Atomic = hRelease.releaseOps.Atomic
+	client.SkipCRDs = hRelease.releaseOps.SkipCRDs
+	client.SubNotes = hRelease.releaseOps.SubNotes
+	client.Timeout = hRelease.releaseOps.Timeout
+	client.Force = hRelease.releaseOps.Force
+	client.Install = hRelease.releaseOps.Install
+	client.Recreate = hRelease.releaseOps.Recreate
+	client.CleanupOnFail = hRelease.releaseOps.CleanupOnFail
+
+	// merge chart path options
+	client.ChartPathOptions.CaFile = hRelease.releaseOps.ChartPathOptions.CaFile
+	client.ChartPathOptions.CertFile = hRelease.releaseOps.ChartPathOptions.CertFile
+	client.ChartPathOptions.KeyFile = hRelease.releaseOps.ChartPathOptions.KeyFile
+	client.ChartPathOptions.InsecureSkipTLSverify = hRelease.releaseOps.ChartPathOptions.InsecureSkipTLSverify
+	client.ChartPathOptions.Keyring = hRelease.releaseOps.ChartPathOptions.Keyring
+	client.ChartPathOptions.Password = hRelease.releaseOps.ChartPathOptions.Password
+	client.ChartPathOptions.RepoURL = hRelease.releaseOps.ChartPathOptions.RepoURL
+	client.ChartPathOptions.Username = hRelease.releaseOps.ChartPathOptions.Username
+	client.ChartPathOptions.Verify = hRelease.releaseOps.ChartPathOptions.Verify
+	client.ChartPathOptions.Version = hRelease.releaseOps.ChartPathOptions.Version
+
+	chartPath, err := client.ChartPathOptions.LocateChart(chart, hRelease.helmSettings)
+	if err != nil {
+		klog.Errorf("Fail to get chartPath, with error: %s", err.Error())
+		return err
+	}
+
+	chartRequested, err := loader.Load(chartPath)
+	if err != nil {
+		klog.Errorf("Fail to load chartPath into chartRequested, with error: %s", err.Error())
+		return err
+	}
+
+	if req := chartRequested.Metadata.Dependencies; req != nil {
+		if err := action.CheckDependencies(chartRequested, req); err != nil {
+			klog.Errorf("Fail to check dependencies, witherr :%s", err.Error())
+			return err
+		}
+	}
+
+	_, err = client.Run(name, chartRequested, vals)
+	if err != nil {
+		klog.Errorf("fail to run upgrade, witherr: %s", err.Error())
+		return err
+	}
+
+	return nil
+}
+
 func (hRelease *HelmReleaseManager) UninstallRelease(name string) error {
 	actionConfig, err := getActionConfig(hRelease.listOps.Namespace, hRelease.kubeToken)
 	if err != nil {

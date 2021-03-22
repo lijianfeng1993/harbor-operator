@@ -16,6 +16,16 @@ func InstallRelease(kubeToken *helm.KubeToken, releaseListOps *helm.ReleaseListO
 	return nil
 }
 
+func UpgradeRelease(kubeToken *helm.KubeToken, releaseListOps *helm.ReleaseListOptions, installOps *helm.ReleaseOptions, settings *cli.EnvSettings, releaseName, chartPath string) error {
+	releaseManager := helm.NewHelmReleaseManager(kubeToken, releaseListOps, installOps, settings)
+	err := releaseManager.UpgradeRelease(releaseName, chartPath)
+	if err != nil {
+		klog.Errorf("Fail to install release of %s, with error: %s", releaseName, err.Error())
+		return err
+	}
+	return nil
+}
+
 func ListReleases(kubeToken *helm.KubeToken, releaseListOps *helm.ReleaseListOptions, installOps *helm.ReleaseOptions, settings *cli.EnvSettings) ([]helm.ReleaseElement, error) {
 	var targetNamespace string
 	if releaseListOps.Namespace != "" {

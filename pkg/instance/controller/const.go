@@ -41,4 +41,7 @@ const (
 	HarborDbRepoTag      = "v2.1.3"
 	HarborRedisRepoName  = "goharbor/redis-photon"
 	HarborRedisRepoTag   = "v2.1.3"
+
+	ImageVersion213 = "v2.1.3"
+	ImageVersion214 = "v2.1.4"
 )

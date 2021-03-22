@@ -18,6 +18,7 @@ Table of Contents
         * [Compile harbor operator](#compile-harbor-operator)
         * [Deploy harbor operator](#deploy-harbor-operator)
         * [Deploy harbor](#deploy-harbor)
+        * [Upgrade harbor](#upgrade-harbor)
         * [Cleanup](#cleanup)
 
 ## Prerequisites
@@ -124,7 +125,7 @@ metadata:
 spec:  
   instanceInfo:
     instanceName: "testharbor"
-    instanceType: "harbor"
+    instanceVersion: "v2.1.3"
     nodePortIndex: 32190
     redisDbIndex: 30
     s3Config:
@@ -210,6 +211,31 @@ v2.1.3: digest: sha256:cf7e4311220b44f6d03b093028a69a24613fac6b47bbc16c7f5085711
 
 * 登陆页面查看镜像详情
   ![image](https://raw.githubusercontent.com/lijianfeng1993/harbor-operator/master/image/testharbor.png)
+
+
+### Upgrade harbor
+目前harbor-operator提供harbor小版本的自动升级(暂不支持降级以及大版本升级)
+```
+# 修改testharbor.yaml配置文件，将版本从v2.1.3升级到v2.1.4，apploy文件
+$ cat testharbor.yaml
+apiVersion: harbor.example.com/v1
+kind: HarborService
+metadata:
+  name: testharbor
+spec:  
+  instanceInfo:
+    instanceName: "testharbor"
+    instanceVersion: "v2.1.4"
+    nodePortIndex: 32190
+    redisDbIndex: 30
+    s3Config:
+      bucket: "test1"
+      accesskey: "admin"
+      secretkey: "8cDcos11"
+      
+$ kubectl apply -f testharbor.yaml
+```
+升级完成后，查看当前新的harbor版本
 
 ### Cleanup
 * 删除cr资源

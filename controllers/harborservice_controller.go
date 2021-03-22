@@ -70,15 +70,25 @@ func (r *HarborServiceReconciler) Reconcile(contxt context.Context, req ctrl.Req
 		return ctrl.Result{}, err
 	}
 
-	// 将list到的cr信息初始化到HarborServiceList中
-	HarborServiceList[instance.Name] = instance
-
-	// 执行Harbor集群的部署或更新逻辑
-	syncers := r.InitSyncers(req)
-	if err = r.sync(syncers); err != nil {
-		return reconcile.Result{}, err
+	if instance.Status.Condition.Phase == "" {
+		// 执行Harbor集群的部署
+		syncers := r.InitSyncers(req)
+		if err = r.sync(syncers); err != nil {
+			HarborServiceList[instance.Name] = instance
+			return reconcile.Result{}, err
+		}
+	} else if HarborServiceList[instance.Name] != nil && instance.Spec.InstanceInfo.InstanceVersion != HarborServiceList[instance.Name].Spec.InstanceInfo.InstanceVersion {
+		HarborServiceList[instance.Name] = instance
+		// 执行Harbor集群的更新
+		syncers := r.InitSyncers(req)
+		if err = r.sync(syncers); err != nil {
+			return reconcile.Result{}, err
+		}
+		return reconcile.Result{}, nil
 	}
 
+	// 将当前list的已有的cr信息初始化到HarborServiceList中
+	HarborServiceList[instance.Name] = instance
 	return ctrl.Result{}, nil
 }
 

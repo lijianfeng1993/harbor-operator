@@ -2,13 +2,13 @@ package helm
 
 //define install harbor request info
 type InstallInfo struct {
-	InstanceName  string    `json:"instanceName"`
-	InstanceType  string    `json:"instanceType"`
-	NodePortIndex int64     `json:"nodePortIndex"`
-	S3            S3Config  `json:"s3"`
-	PgInfo        PgInfo    `json:"pginfo"`
-	RedisInfo     RedisInfo `json:"redisinfo"`
-	Jobservicepvc string    `json:"jobservicepvc"`
+	InstanceName    string    `json:"instanceName"`
+	InstanceVersion string    `json:"instanceVersion"`
+	NodePortIndex   int64     `json:"nodePortIndex"`
+	S3              S3Config  `json:"s3"`
+	PgInfo          PgInfo    `json:"pginfo"`
+	RedisInfo       RedisInfo `json:"redisinfo"`
+	Jobservicepvc   string    `json:"jobservicepvc"`
 }
 
 type RedisInfo struct {
